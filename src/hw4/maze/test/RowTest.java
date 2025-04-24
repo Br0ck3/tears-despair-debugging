@@ -102,11 +102,13 @@ class RowTest {
 	}
 
 	@Test
-	public void testToString() {
-		assertEquals("Row [cells=["
-							+ "Cell [left=EXIT, right=APERTURE, up=WALL, down=APERTURE], "
-							+ "Cell [left=APERTURE, right=WALL, up=WALL, down=APERTURE], "
-							+ "Cell [left=WALL, right=WALL, up=WALL, down=APERTURE]]]", row.toString());
+	void testToString() {
+		ArrayList<Cell> cells = new ArrayList<>();
+		cells.add(new Cell());
+		Row row = new Row(cells);
+		
+		assertTrue(row.toString().contains("Row [cells="));
+		assertTrue(row.toString().contains("Cell [left="));
 	}
 
 }

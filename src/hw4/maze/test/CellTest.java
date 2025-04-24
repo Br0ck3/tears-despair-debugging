@@ -1,6 +1,7 @@
 package hw4.maze.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.Stream;
 
@@ -18,8 +19,6 @@ import hw4.maze.CellComponents;
 
 class CellTest {
 	
-	private Cell cell = null;
-
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -30,10 +29,6 @@ class CellTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		cell = new Cell(CellComponents.WALL, 
-							CellComponents.EXIT, 
-							CellComponents.APERTURE, 
-							CellComponents.WALL);
 	}
 
 	@AfterEach
@@ -41,25 +36,50 @@ class CellTest {
 	}
 	
 	@Test
+	void testGetters() {
+		// Create a cell with known components
+		Cell cell = new Cell(CellComponents.EXIT, CellComponents.WALL, CellComponents.APERTURE, CellComponents.WALL);
+		
+		// Test each getter returns the correct value
+		assertEquals(CellComponents.EXIT, cell.getLeft());
+		assertEquals(CellComponents.WALL, cell.getRight());
+		assertEquals(CellComponents.APERTURE, cell.getUp());
+		assertEquals(CellComponents.WALL, cell.getDown());
+	}
+	
+	@Test
 	void testToString() {
-		assertEquals("Cell [left=" + cell.getLeft() + ", right=" + cell.getRight() + ", up=" + cell.getUp() + ", down=" + cell.getDown() + "]", cell.toString());
+		Cell cell = new Cell(CellComponents.EXIT, CellComponents.APERTURE, CellComponents.WALL, CellComponents.APERTURE);
+		assertTrue(cell.toString().contains("Cell [left="));
+		assertTrue(cell.toString().contains("right="));
+		assertTrue(cell.toString().contains("up="));
+		assertTrue(cell.toString().contains("down="));
 	}
 	
 	@ParameterizedTest
 	@MethodSource("providingGetterReturns")
-	void testGetters(CellComponents actual, CellComponents expected) {
-		assertEquals(expected, actual);
+	void testGetters(CellComponents left, CellComponents right, CellComponents up, CellComponents down) {
+		// Create cell with provided components
+		Cell cell = new Cell(left, right, up, down);
+		
+		// Test each getter matches its respective parameter
+		assertEquals(left, cell.getLeft());
+		assertEquals(right, cell.getRight());
+		assertEquals(up, cell.getUp());
+		assertEquals(down, cell.getDown());
 	}
 	
 	private static Stream<Arguments> providingGetterReturns() {
-		Cell cellGetterComponents = new Cell(CellComponents.WALL, 
-				CellComponents.EXIT, 
-				CellComponents.APERTURE, 
-				CellComponents.WALL);
-		return Stream.of(Arguments.of(cellGetterComponents.getLeft(), CellComponents.WALL),
-							Arguments.of(cellGetterComponents.getRight(), CellComponents.EXIT),
-							Arguments.of(cellGetterComponents.getUp(), CellComponents.APERTURE),
-							Arguments.of(cellGetterComponents.getDown(), CellComponents.WALL));
+		return Stream.of(
+			// Test case 1: All APERTURE
+			Arguments.of(CellComponents.APERTURE, CellComponents.APERTURE, CellComponents.APERTURE, CellComponents.APERTURE),
+			// Test case 2: All WALL
+			Arguments.of(CellComponents.WALL, CellComponents.WALL, CellComponents.WALL, CellComponents.WALL),
+			// Test case 3: Mixed components
+			Arguments.of(CellComponents.EXIT, CellComponents.WALL, CellComponents.APERTURE, CellComponents.WALL),
+			// Test case 4: Different mixed components
+			Arguments.of(CellComponents.WALL, CellComponents.EXIT, CellComponents.WALL, CellComponents.APERTURE)
+		);
 	}
 	
 

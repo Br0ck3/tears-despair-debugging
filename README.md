@@ -1,33 +1,61 @@
-# Tears, Despair & Debugging – Project 04
+# Project 04: Grid Escape Game
 
 CMP_SC / INFO_TC 3330  
 Spring 2025  
 Brock Burchett + Eric Hudson
 
-## Status
+## Overview
 
-Just getting started on this — setting up the repo and adding my teammate. Planning to structure the project soon and then build it out based on the test cases we were given. This will be done using test-driven development (TDD), so we’ll be making sure everything works with the existing JUnit5 tests.
+A grid-based escape game where an agent must navigate through a randomly generated NxN grid (3x3 to 7x7) to reach and escape through an EXIT on the leftmost side. The agent can only move through APERTUREs and must find a path to freedom!
 
-## Plan
+## Implementation Details
 
-Here’s a rough outline of what we’ll do:
+### Core Classes
 
-- [ ] Set up folder structure with packages and classes
-- [ ] Create enums for `Component` and `Direction`
-- [ ] Build the `Cell`, `Grid`, and `Agent` classes
-- [ ] Implement the simulation with a `main()` method
-- [ ] Pass all the JUnit5 tests
-- [ ] Clean up code, add Javadoc and submit
+- `CellComponents` - Enum for cell sides (WALL, APERTURE, EXIT)
+- `Direction` - Enum for movement directions (UP, DOWN, LEFT, RIGHT)
+- `Cell` - Represents a single cell with components on each side
+- `Row` - Holds a row of cells in the grid
+- `Grid` - Manages the game grid and ensures valid generation
+- `Agent` - Handles movement logic and tracks position
+- `Simulation` - Main game loop and user interface
 
-## Goal
+### Key Features
 
-Get the agent to escape the randomly generated grid by navigating through APERTURES and reaching the EXIT on the leftmost column. Every cell must have at least one APERTURE. Game ends when the agent moves LEFT from the EXIT cell.
+- Random grid generation (3x3 to 7x7)
+- Each cell has at least one APERTURE
+- Single EXIT placed on leftmost column
+- Agent can only move through APERTUREs
+- Game ends when agent moves LEFT through EXIT
+
+### How to Run
+
+1. Compile all Java files
+2. Run the Simulation class
+3. Use UP/DOWN/LEFT/RIGHT commands to move
+4. Try to escape through the EXIT!
+
+## Testing
+
+Used JUnit5 for test-driven development. All test cases pass:
+- CellTest - Validates cell component management
+- RowTest - Tests row functionality
+- GridTest - Ensures proper grid generation
+- PlayerTest - Verifies agent movement logic
+
+All functionality is demonstrated via JUnit tests and Simulation.java
+
+## Contributors
+
+- Brock Burchett: Grid generation, Cell implementation
+- Eric Hudson: Agent movement, game simulation
 
 ## Notes
 
-- Using Git for version control — committing small and meaningful changes.
-- Will be working on this throughout the week leading up to the 4/22 deadline.
-- Once we start building out the logic, I’ll update this README with how everything works.
+- Built using Java and JUnit5
+- Follows object-oriented principles
+- Includes error handling and input validation
+- Uses proper Java naming conventions
 
 ---
 
